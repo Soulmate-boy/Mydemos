@@ -1,11 +1,15 @@
 /**
  * Created by LumpSum on 2019/5/19.
  */
-var http = require("http");
+var http = require("http");//node内置
+var url = require('url');//node内置
 
 var public = require("./public.js");
 var User = require('./user.js');
 var Teahcer = require('./teahcer.js');
+var router = require('./router.js');
+
+
 
 
 
@@ -30,9 +34,25 @@ http.createServer(function (request, response) {
         // user = new User(num++,'张三',10);
         // user.enter();
 
-        teahcer = new Teahcer(num,'李四',90);
-        teahcer.enter();
-        teahcer.teach(response);
+        // teahcer = new Teahcer(num,'李四',80);
+        // teahcer.enter();
+        // teahcer.teach(response);
+
+        var pathname = url.parse(request.url).pathname;
+        // console.log(pathname);
+        pathname = pathname.replace(/\//,'');
+        // console.log(pathname);
+        /*
+        if(pathname == 'login'){
+            router.login();
+        };
+        if(pathname == 'zhuce'){
+            router.zhuce();
+        }
+        */
+       router[pathname](request,response);
+
+
 
 
 
